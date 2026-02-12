@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Portfolio Tracker</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1 { color: #333; }
+        form { margin-bottom: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="number"] { width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        input[type="submit"] { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        input[type="submit"]:hover { background-color: #45a049; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .total { font-weight: bold; font-size: 1.2em; margin-top: 20px; }
+        .error { color: red; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+    <h1>Stock Portfolio Tracker</h1>
+
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        <label for="ticker">Stock Ticker (e.g., AAPL):</label>
+        <input type="text" id="ticker" name="ticker" required>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" step="any" required>
+
+        <input type="submit" value="Add Stock">
+    </form>
+
+    <h2>Your Portfolio</h2>
+
+    {% if portfolio %}
+    <table>
+        <tr>
+            <th>Ticker</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total Value</th>
+        </tr>
+        {% for item in portfolio %}
+        <tr>
+            <td>{{ item.ticker }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>${{ "%.2f"|format(item.price) }}</td>
+            <td>${{ "%.2f"|format(item.total_value) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No stocks in portfolio yet.</p>
+    {% endif %}
+
+    <p class="total">Grand Total Value: ${{ "%.2f"|format(grand_total) }}</p>
+    
+    <p><small>Portfolio saved to <code>portfolio.csv</code> automatically.</small></p>
+
+</body>
+</html>
