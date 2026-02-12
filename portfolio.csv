@@ -1,0 +1,6 @@
+ticker,quantity,price,total_value
+AAPL,10.0,150.0,1500.0
+TSLA,5.0,250.5,1252.5
+AAPL,3.0,150.0,450.0
+TSLA,3.0,250.5,751.5
+MSFT,2.0,300.0,600.0
